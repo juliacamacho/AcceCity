@@ -3,34 +3,31 @@ import { useState, useEffect } from 'react';
 import { db } from '../config/firebase'
 import { getDocs, collection } from "firebase/firestore"; 
 
-function Cards(){
+function Cards(props){
 
   const [cardsList, setCardsList] = useState([]);
 
   useEffect(async () => {
- 
-    getDocs(collection(db, "scans")).then((snapshot) => {
 
-      Promise.all(snapshot.docs.map((doc) => {
+    // console.log("DATA:", props.data)
+ 
+    Promise.all(props.data.map((item) => {
         return (
-          <div className="shadow rounded-sm px-6 py-4">
+          <div className="shadow rounded-sm px-6 py-4" key="item.title">
             <div>
-              ID: {doc.data().scanID}
+              ID: {item.scanID}
             </div>
             <div>
-              (Row, Col): ({doc.data().row}, {doc.data().col})
+              (longitude, latitude): ({item.lng}, {item.lat})
             </div>
             <div>
-              Score: {doc.data().score}
+              Score: {item.score}
             </div>
           </div>
         )
       })).then((result) => {
         setCardsList(result)
       })
-
-    })
-
 
   }, [])
 
