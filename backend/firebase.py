@@ -11,6 +11,7 @@ db = firestore.client()
 docs = [
     {
         "scanID": "MIT",
+        "tags": ["Walkability", "Accessibility"],
         "lat": 42.36,
         "lng": -71.09,
         "score": 88,
@@ -19,11 +20,21 @@ docs = [
     },
     {
         "scanID": "MIT",
+        "tags": ["Walkability", "Accessibility"],
         "lat": 42.365,
         "lng": -71.093,
         "score": 21,
         "title": "No guard rails on ramp",
         "description": "The ramp into the building lacks guard rails. "
+    }
+    {
+        "scanID": "MIT",
+        "tags": ["Walkability", "Accessibility"],
+        "lat": 42.363,
+        "lng": -71.098,
+        "score": 25,
+        "title": "Few reserved parking spaces",
+        "description": "The parking lot lacks reserved parking spaces. "
     }
 ]
 
