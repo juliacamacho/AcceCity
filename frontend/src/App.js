@@ -22,6 +22,7 @@ function App() {
   })
   const [zoom, setZoom] = useState(15)
   const [isEditing, setIsEditing] = useState(true);
+  const [selectedtags, setSelectedtags] = useState(null);
   const [selected, setSelected] = useState(null);
   /**
    * 
@@ -144,14 +145,15 @@ function App() {
             selected={selected} 
             setSelected={setSelected}
           />
+
         </div>
-          
-        <div className='h-screen col-span-1 py-6 px-10'>
-            <Sidebar />
-        </div>
-                  
+        <div className='overflow-y-auto h-screen col-span-1 py-6 px-10'>
+            <Sidebar 
+            selected={selectedtags} 
+            setSelected={setSelectedtags}
+            />
+        </div>    
       </div>
-    
     </div>
   );
 }

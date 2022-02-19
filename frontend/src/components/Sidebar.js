@@ -1,7 +1,8 @@
 import React from 'react';
+import {useState} from 'react';
 
-function Sidebar(){
-
+function Sidebar(props){
+  const [selectedtags, setSelectedtags] = useState(null);
   return(
     <div>
         {/* Score */}
@@ -19,32 +20,19 @@ function Sidebar(){
         <hr class="bg-gray-500 lg:w-full md:my-5 my-5" />
 
         { /* Concern Buttons */}
+
         <div className="grid-cols-3 pb-4">
-        <div className="hover:bg-gray-600 hover:text-white bg-white rounded-sm border shadow p-2 max-w-lg">
+          
+          <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "allConcerns") ? "bg-gray-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("allConcerns")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">All Concerns</button>
             </div>
           </div>
+
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className="hover:bg-gray-600 hover:text-white bg-white rounded-sm border shadow p-2 max-w-lg">
-            <div className="flex flex-col items-center space-y-1">
-              <button className="text-m text-center">Traffic</button>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid-cols-3 pb-4">
-        <div className="hover:bg-gray-600 hover:text-white bg-white rounded-sm border shadow p-2 max-w-lg">
-            <div className="flex flex-col items-center space-y-1">
-              <button className="text-m text-center">Walkability</button>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid-cols-3 pb-4">
-        <div className="hover:bg-gray-600 hover:text-white bg-white rounded-sm border shadow p-2 max-w-lg">
+        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "accessibility") ? "bg-red-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("accessibility")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">Accessibility</button>
             </div>
@@ -52,9 +40,25 @@ function Sidebar(){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className="hover:bg-gray-600 hover:text-white bg-white rounded-sm border shadow p-2 max-w-lg">
+        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "walkability") ? "bg-blue-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("walkability")}}>
             <div className="flex flex-col items-center space-y-1">
-              <button className="text-m text-center">Parking</button>
+              <button className="text-m text-center">Walkability</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid-cols-3 pb-4">
+        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "mobility") ? "bg-green-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("mobility")}}>
+            <div className="flex flex-col items-center space-y-1">
+              <button className="text-m text-center">Mobility</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid-cols-3 pb-4">
+        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "traffic") ? "bg-purple-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("traffic")}}>
+            <div className="flex flex-col items-center space-y-1">
+              <button className="text-m text-center">Traffic</button>
             </div>
           </div>
         </div>
@@ -80,7 +84,7 @@ function Sidebar(){
         <div className="flex">
           <div className="w-2/3">
             <h1 className="text-red-600 font-semibold">
-              Traffic
+              Accessibility
             </h1>
             <span className="block text-xs text-red-600">Unsatisfactory</span>
           </div>
@@ -130,7 +134,7 @@ function Sidebar(){
         <div className="flex">
           <div className="w-2/3">
             <h1 className="text-green-600 font-semibold">
-            Accessibility
+            Mobility
             </h1>
             <span className="block text-xs text-green-600">Excellent</span>
           </div>
@@ -157,7 +161,7 @@ function Sidebar(){
         <div className="flex">
           <div className="w-2/3">
             <h1 className="text-purple-600 font-semibold">
-            Parking
+            Traffic
             </h1>
             <span className="block text-xs text-purple-600">Needs improvement</span>
           </div>
