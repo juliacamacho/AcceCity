@@ -2,7 +2,13 @@ import clip
 import torch
 from PIL import Image
 
-def runDetect(self,filename,options = ["blue square","nothing"]):
+class ObjectDetector:
+    def __init__(self):
+        # Load the model
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.model, self.preprocess = clip.load('ViT-B/32', self.device)
+    
+    def runDetect(self,filename,options = ["handicap","parking"]):
         # Prepare the inputs
         image = self.preprocess(Image.open(filename)).unsqueeze(0).to(self.device)
         
@@ -16,10 +22,8 @@ def runDetect(self,filename,options = ["blue square","nothing"]):
             probs = logits_per_image.softmax(dim=-1).cpu().numpy()
         
         index_max = max(range(len(probs[0])), key=probs[0].__getitem__)
+        print(options)
         print(probs)
         print(probs[0][index_max])
 
-        if probs[0][index_max]>0.7:
-            return options[index_max]
-        else:
-            return "nothing"
+        return options[index_max]
