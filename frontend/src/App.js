@@ -21,7 +21,6 @@ function App() {
     lng: -71.093889,
   })
   const [zoom, setZoom] = useState(15)
-  const [isEditing, setIsEditing] = useState(true);
   const [selected, setSelected] = useState(null);
   /**
    * 
@@ -133,7 +132,7 @@ function App() {
             mapElement={<div style={{ height: `100%` }} />}
             defaultCenter={defaultCenter} center={center} zoom={zoom}
             selected={selected} setSelected={setSelected}
-            cityData={cityData} isEditing={isEditing}
+            cityData={cityData}
           />
         </div>
 

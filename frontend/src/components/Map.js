@@ -13,11 +13,22 @@ import setup from '../setup.json'
 function Map(props) {
 
     const [bounds, setBounds] = useState(null)
+    const [isEditing, setIsEditing] = useState(false)
+
+    const scanArea = () => {
+        console.log("scanArea")
+        console.log("calling backend with ", bounds.getCenter())
+        
+    }
 
     useEffect(() => {
         const listener = e => {
           if (e.key === "Escape") {
             props.setSelected(null);
+            setIsEditing(false)
+          }
+          else if (e.key === "e") {
+            setIsEditing(true);
           }
         };
         window.addEventListener("keydown", listener);
@@ -51,11 +62,12 @@ function Map(props) {
             defaultZoom={props.zoom}
             defaultOptions={{ styles: MapStylesRetro }}
         >
-            {(bounds && props.isEditing) && (
+            {(bounds && isEditing) && (
             <Rectangle 
                 bounds={bounds}
                 editable={true}
                 draggable={true}
+                onClick={()=>scanArea()}
             />
             )}
             {props.cityData.map(point => (
