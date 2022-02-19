@@ -9,3 +9,4 @@ def hello_world():
 @app.route("/objectDetect",methods = ['POST'])
 @cross_origin(supports_credentials=True)
 def objectDetect():
+    return
