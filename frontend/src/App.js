@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Map from './components/Map';
+import MapWrapped from './components/Map';
 import Geocode from "react-geocode";
 import { useState, useEffect } from 'react';
 import setup from './setup.json'
@@ -64,7 +64,15 @@ function App() {
               />
             </form >
           </div>
-          <Map defaultCenter={defaultCenter} center={center} zoom={zoom}/>
+          <MapWrapped
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${
+              setup.GCP_MAPS_KEY
+            }`}
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `100%` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+            defaultCenter={defaultCenter} center={center} zoom={zoom}
+          />
         </div>
         <div className='h-screen col-span-2'>
           {/* Buttons */}
