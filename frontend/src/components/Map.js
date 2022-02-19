@@ -28,6 +28,7 @@ function Map(props) {
       }, []);
 
       useEffect(()=> {
+        console.log("setting new bounds")
         setBounds(new window.google.maps.LatLngBounds(
             {
                 lat: props.center.lat - 0.005,
@@ -52,8 +53,9 @@ function Map(props) {
         >
             {(bounds && props.isEditing) && (
             <Rectangle 
-                defaultBounds={bounds}
+                bounds={bounds}
                 editable={true}
+                draggable={true}
             />
             )}
             {props.cityData.map(point => (
