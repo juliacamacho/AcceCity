@@ -9,16 +9,26 @@ import {
   } from "react-google-maps";
 import MapStylesRetro from './MapStylesRetro';
 import setup from '../setup.json'
+import Modal from './Modal';
 
 function Map(props) {
-
+    const [showModal, setShowModal] = useState(false);
     const [bounds, setBounds] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
 
-    const scanArea = () => {
-        console.log("scanArea")
-        console.log("calling backend with ", bounds.getCenter())
-        
+    const handleClick = () => {
+        setShowModal(true)
+    }
+
+    const handleSubmit = (name) => {
+        setIsEditing(false)
+        setShowModal(false)
+        let apiCall = {
+            "name": name,
+            "southWest": bounds.getSouthWest().toJSON(),
+            "northEast": bounds.getNorthEast().toJSON()
+        }
+        console.log("calling backend with ", apiCall)
     }
 
     useEffect(() => {
@@ -55,6 +65,7 @@ function Map(props) {
     return (
         // Important! Always set the container height explicitly
         <div style={{ height: '100vh', width: '100vh' }}>
+            <Modal showModal={showModal} setShowModal={setShowModal} handleSubmit={handleSubmit}/>
         <GoogleMap
             bootstrapURLKeys={{ key: setup.GCP_MAPS_KEY }}
             defaultCenter={props.defualtCenter}
@@ -67,12 +78,12 @@ function Map(props) {
                 bounds={bounds}
                 editable={true}
                 draggable={true}
-                onClick={()=>scanArea()}
+                onClick={()=>handleClick()}
             />
             )}
             {props.cityData.map(point => (
                 <Marker
-                key={1}
+                key={point.scanID + point.id}
                 position={{
                     lat: point.lat,
                     lng: point.lng
