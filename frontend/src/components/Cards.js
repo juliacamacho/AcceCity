@@ -20,7 +20,7 @@ function Cards(props){
             {item.description}
           </div>
           <div>
-            Score: {item.score}
+            Scores: {item.scores.map((score) => `${score}, `)}
           </div>
         </div>
       )
