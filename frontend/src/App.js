@@ -16,16 +16,16 @@ function App() {
     lng: -71.093889,
   })
   const [zoom, setZoom] = useState(15)
-  const [locStr, setLocStr] = useState("Austin")
+  const [locStr, setLocStr] = useState("")
 
   useEffect(()=>{
-    console.log("runnign")
     Geocode.setApiKey(setup.GCP_MAPS_KEY);
     Geocode.setLocationType("ROOFTOP");
   }, [])
   
   const searchLoc = () => {
     // Get latitude & longitude from address.
+    console.log("searchLoc")
     Geocode.fromAddress(locStr).then(
       (response) => {
         const newCenter = response.results[0].geometry.location;
@@ -46,15 +46,30 @@ function App() {
         AccCity
       </div>
 
-      <div className="text-2xl">
-        <div className='h-screen w-3/6'>
+      <div className="grid grid-cols-6">
+        <div className='h-screen col-span-3 py-6 px-10'>
+
+          <div className="grid-cols-3 pb-4">
+            <form onSubmit={(e)=>{
+              e.preventDefault();
+              searchLoc()
+            }}>
+            <input 
+              type="text"
+              id="search"
+              className="col-span-2 w-full shadow focus:ring-blue-500 border-gray-300 px-4 rounded-sm py-2" 
+              placeholder="Search for a city, street, or address..."
+              onChange={(e)=>setLocStr(e.target.value)}
+              value={locStr}
+              />
+            </form >
+          </div>
           <Map defaultCenter={defaultCenter} center={center} zoom={zoom}/>
         </div>
-        <div className='h-screen w-2/6'>
+        <div className='h-screen col-span-2'>
           {/* Buttons */}
-          <button onClick={() => searchLoc()} className="w-full h-screen bg-blue-100" />
         </div>
-        <div className='h-screen w-1/6'>
+        <div className='h-screen col-span-1'>
           {/* Score */}
         </div>
       </div>
