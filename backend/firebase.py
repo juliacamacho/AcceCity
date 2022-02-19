@@ -26,10 +26,10 @@ docs = [
         "score": 21,
         "title": "No guard rails on ramp",
         "description": "The ramp into the building lacks guard rails. "
-    }
+    },
     {
         "scanID": "MIT",
-        "tags": ["Walkability", "Accessibility"],
+        "tags": ["Parking"],
         "lat": 42.363,
         "lng": -71.098,
         "score": 25,
