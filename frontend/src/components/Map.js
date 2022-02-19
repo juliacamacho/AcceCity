@@ -4,12 +4,15 @@ import {
     withScriptjs,
     GoogleMap,
     Marker,
-    InfoWindow
+    InfoWindow,
+    Rectangle
   } from "react-google-maps";
 import MapStylesRetro from './MapStylesRetro';
 import setup from '../setup.json'
 
 function Map(props) {
+
+    const [bounds, setBounds] = useState(null)
 
 
     useEffect(() => {
@@ -25,16 +28,33 @@ function Map(props) {
         };
       }, []);
 
+      useEffect(()=> {
+        setBounds(new window.google.maps.LatLngBounds(
+            {
+                lat: props.center.lat - 0.005,
+                lng: props.center.lng - 0.005
+            },
+            {
+                lat: props.center.lat + 0.005,
+                lng: props.center.lng + 0.005
+            },
+        ))
+      }, [props.center])
+
     return (
         // Important! Always set the container height explicitly
         <div style={{ height: '100vh', width: '100vh' }}>
         <GoogleMap
             bootstrapURLKeys={{ key: setup.GCP_MAPS_KEY }}
-            defaultCenter={props.center}
+            defaultCenter={props.defualtCenter}
             center={props.center}
             defaultZoom={props.zoom}
             defaultOptions={{ styles: MapStylesRetro }}
         >
+            {(bounds && props.isEditing) && <Rectangle 
+                bounds={bounds}
+                editable={true}
+            />}
             {props.cityData.map(point => (
                 <Marker
                 key={1}
@@ -52,8 +72,6 @@ function Map(props) {
                 />
             ))}
 
-            {props.selected && (console.log(props.selected))}
-
             {props.selected && (
                 <InfoWindow
                 onCloseClick={() => {
@@ -69,7 +87,7 @@ function Map(props) {
                     <p>{props.selected.description}</p>
                 </div>
                 </InfoWindow>
-            )} 
+            )}
 
             </GoogleMap>
         </div>
