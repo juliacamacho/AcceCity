@@ -57,12 +57,12 @@ function App() {
         return (
           {
             "id": doc.id,
+            "scanID": doc.data().scanID,
+            "title": doc.data().title,
             "lat": doc.data().lat,
             "lng": doc.data().lng,
-            "score": doc.data().score,
-            "title": doc.data().title,
             "description": doc.data().description,
-            "scanID": doc.data().scanID,
+            "score": doc.data().score,
             "tags": doc.data().tags,
           }
         )
