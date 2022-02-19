@@ -113,7 +113,7 @@ function App() {
         </div>
         
 
-        <div className='h-screen col-span-2 py-6'>
+        <div className='overflow-y-auto h-screen col-span-2 py-6'>
           <Cards />
         </div>
           
