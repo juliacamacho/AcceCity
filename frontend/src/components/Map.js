@@ -14,7 +14,6 @@ function Map(props) {
 
     const [bounds, setBounds] = useState(null)
 
-
     useEffect(() => {
         const listener = e => {
           if (e.key === "Escape") {
@@ -51,10 +50,12 @@ function Map(props) {
             defaultZoom={props.zoom}
             defaultOptions={{ styles: MapStylesRetro }}
         >
-            {(bounds && props.isEditing) && <Rectangle 
-                bounds={bounds}
+            {(bounds && props.isEditing) && (
+            <Rectangle 
+                defaultBounds={bounds}
                 editable={true}
-            />}
+            />
+            )}
             {props.cityData.map(point => (
                 <Marker
                 key={1}
