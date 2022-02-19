@@ -4,7 +4,8 @@ import MapWrapped from './components/Map';
 import Geocode from "react-geocode";
 import { useState, useEffect } from 'react';
 import setup from './setup.json'
-
+import { db } from './config/firebase'
+import { getDocs, collection } from "firebase/firestore"; 
 
 function App() {
   const defaultCenter = {
@@ -18,9 +19,16 @@ function App() {
   const [zoom, setZoom] = useState(15)
   const [locStr, setLocStr] = useState("")
 
-  useEffect(()=>{
+  useEffect(async ()=>{
     Geocode.setApiKey(setup.GCP_MAPS_KEY);
     Geocode.setLocationType("ROOFTOP");
+
+    const querySnapshot = await getDocs(collection(db, "scans"));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });
+
   }, [])
   
   const searchLoc = () => {
