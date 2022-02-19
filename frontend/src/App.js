@@ -56,6 +56,7 @@ function App() {
       Promise.all(snapshot.docs.map((doc) => {
         return (
           {
+            "id": doc.id,
             "lat": doc.data().lat,
             "lng": doc.data().lng,
             "score": doc.data().score,
@@ -66,7 +67,7 @@ function App() {
           }
         )
       })).then((result) => {
-        console.log("RESULT:", result)
+        // console.log("RESULT:", result)
         setCityData(result)
       })
 
@@ -93,7 +94,7 @@ function App() {
   return (
     <div className='max-h-full'>
 
-      <div className="bg-blue-500 text-2xl font-bold text-white py-2 px-10">
+      <div className="bg-sky-500 text-2xl font-bold text-white py-2 px-10">
         AccCity
       </div>
 
@@ -134,10 +135,14 @@ function App() {
             cityData={cityData} isEditing={isEditing}
           />
         </div>
-        
+
 
         <div className='overflow-y-auto h-screen col-span-2 py-6'>
-          <Cards data={cityData} />
+          <Cards 
+            data={cityData} 
+            selected={selected} 
+            setSelected={setSelected}
+          />
         </div>
           
         <div className='h-screen col-span-1 py-6 px-10'>
