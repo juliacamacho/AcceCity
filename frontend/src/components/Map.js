@@ -69,7 +69,7 @@ function Map(props) {
                     props.setSelected(point);
                 }}
                 icon={{
-                    url: `/accessibility.svg`,
+                    url: `${point.score < 50 ? "/badaccess.svg" : "/accessibility.svg"}`,
                     scaledSize: new window.google.maps.Size(25, 25)
                 }}
                 />
