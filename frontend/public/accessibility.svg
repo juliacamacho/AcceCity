@@ -21,10 +21,10 @@
   >
   <sodipodi:namedview
       id="base"
-      bordercolor="#666666"
+      bordercolor="#86F0AA"
       inkscape:pageshadow="2"
       inkscape:window-y="0"
-      pagecolor="#ffffff"
+      pagecolor="#86F0AA"
       inkscape:window-height="712"
       inkscape:zoom="4.9375"
       inkscape:window-x="0"
@@ -42,7 +42,7 @@
   />
   <path
       id="rect865"
-      style="stroke-linejoin:round;fill-rule:evenodd;stroke:#000000;stroke-width:3.2831;fill:#ffffff"
+      style="stroke-linejoin:round;fill-rule:evenodd;stroke:#000000;stroke-width:3.2831;fill:#86F0AA"
       d="m5.15 4.014c-1.1613 0-2.0962 0.9349-2.0962 2.0962v48.994c0 1.162 0.9349 2.097 2.0962 2.097h48.994c1.162 0 2.096-0.935 2.096-2.097v-48.994c0-1.1611-0.934-2.096-2.096-2.096h-48.994z"
       transform="matrix(.95184 0 0 .95184 1.7805 .86658)"
   />
@@ -64,7 +64,7 @@
     />
     <path
         id="path870"
-        style="stroke-linejoin:round;fill-rule:evenodd;stroke:#000000;stroke-linecap:round;stroke-width:3.3924;fill:#ffffff"
+        style="stroke-linejoin:round;fill-rule:evenodd;stroke:#000000;stroke-linecap:round;stroke-width:3.3924;fill:#86F0AA"
         d="m19.781 28.879c-2.614 2.261-4.343 5.494-4.343 9.219 0 6.805 5.507 12.313 12.312 12.313s12.344-5.508 12.344-12.313c0-2.26-0.781-4.272-1.844-6.094h-17.625l-0.844-3.125z"
         transform="translate(-1.5269 1.0179)"
     />
