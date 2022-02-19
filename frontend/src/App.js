@@ -2,11 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import MapWrapped from './components/Map';
 import Sidebar from './components/Sidebar'
+import Cards from './components/Cards'
 import Geocode from "react-geocode";
 import { useState, useEffect } from 'react';
 import setup from './setup.json'
-import { db } from './config/firebase'
-import { getDocs, collection } from "firebase/firestore"; 
 
 function App() {
   const defaultCenter = {
@@ -23,12 +22,6 @@ function App() {
   useEffect(async ()=>{
     Geocode.setApiKey(setup.GCP_MAPS_KEY);
     Geocode.setLocationType("ROOFTOP");
-
-    const querySnapshot = await getDocs(collection(db, "scans"));
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-    });
 
   }, [])
   
@@ -84,9 +77,8 @@ function App() {
         </div>
         
 
-
-        <div className='h-screen col-span-2'>
-          {/* Buttons */}
+        <div className='h-screen col-span-2 py-6'>
+          <Cards />
         </div>
           
         <div className='h-screen col-span-1 py-6 px-10'>
