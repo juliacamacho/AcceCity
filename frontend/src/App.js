@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Map from './components/Map';
 import Geocode from "react-geocode";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import setup from './setup.json'
 
 function App() {
@@ -35,16 +35,24 @@ function App() {
   }
 
   return (
-    <div className="text-2xl">
-      <div className='h-screen w-3/6'>
-        <Map center={center} zoom={zoom}/>
+    <div className='max-h-full'>
+
+      <div className="bg-blue-500 text-2xl font-bold text-white py-2 px-10">
+        AccCity
       </div>
-      <div className='h-screen w-2/6'>
-        {/* Buttons */}
+
+      <div className="text-2xl">
+        <div className='h-screen w-3/6'>
+          <Map center={center} zoom={zoom}/>
+        </div>
+        <div className='h-screen w-2/6'>
+          {/* Buttons */}
+        </div>
+        <div className='h-screen w-1/6'>
+          {/* Score */}
+        </div>
       </div>
-      <div className='h-screen w-1/6'>
-        {/* Score */}
-      </div>
+    
     </div>
   );
 }

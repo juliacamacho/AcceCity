@@ -6,7 +6,7 @@ function Map(props) {
 
     return (
         // Important! Always set the container height explicitly
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div style={{ height: '100vh', width: '100vh' }}>
         <GoogleMapReact
             bootstrapURLKeys={{ key: setup.GCP_MAPS_KEY }}
             defaultCenter={props.center}
