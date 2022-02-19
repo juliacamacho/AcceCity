@@ -24,14 +24,8 @@ function App() {
   const [selected, setSelected] = useState(null);
   /**
    * 
-   * cityData in the form: [
-   *  {
-   *    
-   *  },
-   * ]
-   * 
-   */
-  const [cityData, setCityData] = useState([
+   * cityData in the form: 
+  [
     {
       "lat": 42.36,
       "lng": -71.09,
@@ -46,7 +40,10 @@ function App() {
       "title": "No guard rails on ramp",
       "description": "The ramp into the building lacks guard rails. "
     }
-  ]);
+  ]
+   * 
+   */
+  const [cityData, setCityData] = useState([]);
   const [locStr, setLocStr] = useState("")
 
   useEffect(async ()=>{
@@ -62,7 +59,9 @@ function App() {
             "lng": doc.data().lng,
             "score": doc.data().score,
             "title": doc.data().title,
-            "description": doc.data().description
+            "description": doc.data().description,
+            "scanID": doc.data().scanID,
+            "tags": doc.data().tags,
           }
         )
       })).then((result) => {
