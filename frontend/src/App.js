@@ -7,6 +7,10 @@ import Geocode from "react-geocode";
 import { useState, useEffect } from 'react';
 import setup from './setup.json'
 
+import { db } from './config/firebase'
+import { getDocs, collection } from "firebase/firestore"; 
+
+
 function App() {
   const defaultCenter = {
     lat: 42.36,
@@ -48,6 +52,25 @@ function App() {
   useEffect(async ()=>{
     Geocode.setApiKey(setup.GCP_MAPS_KEY);
     Geocode.setLocationType("ROOFTOP");
+
+    getDocs(collection(db, "scans")).then((snapshot) => {
+
+      Promise.all(snapshot.docs.map((doc) => {
+        return (
+          {
+            "lat": doc.data().lat,
+            "lng": doc.data().lng,
+            "score": doc.data().score,
+            "title": doc.data().title,
+            "description": doc.data().description
+          }
+        )
+      })).then((result) => {
+        console.log("RESULT:", result)
+        setCityData(result)
+      })
+
+    })
 
   }, [])
   
@@ -114,11 +137,11 @@ function App() {
         
 
         <div className='h-screen col-span-2 py-6'>
-          <Cards />
+          <Cards data={cityData} />
         </div>
           
         <div className='h-screen col-span-1 py-6 px-10'>
-            <Sidebar/>
+            <Sidebar />
         </div>
                   
       </div>
