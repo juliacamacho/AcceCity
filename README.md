@@ -7,4 +7,4 @@
 
 Downloading google images: Clone https://github.com/Joeclinton1/google-images-download
 
-Run: googleimagesdownload --keywords "parking spot"
+Run: python3 google_images_download.py --keywords "sidewalk" -l 40
