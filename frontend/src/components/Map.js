@@ -10,6 +10,7 @@ function Map(props) {
         <GoogleMapReact
             bootstrapURLKeys={{ key: setup.GCP_MAPS_KEY }}
             defaultCenter={props.center}
+            center={props.center}
             defaultZoom={props.zoom}
         />
         </div>

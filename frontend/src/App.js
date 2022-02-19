@@ -5,20 +5,25 @@ import Geocode from "react-geocode";
 import { useState, useEffect } from 'react';
 import setup from './setup.json'
 
+
 function App() {
+  const defaultCenter = {
+    lat: 42.36,
+    lng: -71.093889,
+  }
   const [center, setCenter] = useState({
     lat: 42.36,
-    lng: -71.093889
+    lng: -71.093889,
   })
   const [zoom, setZoom] = useState(15)
-  const [locStr, setLocStr] = useState("")
+  const [locStr, setLocStr] = useState("Austin")
 
-  useEffect(() => {
+  useEffect(()=>{
+    console.log("runnign")
     Geocode.setApiKey(setup.GCP_MAPS_KEY);
     Geocode.setLocationType("ROOFTOP");
   }, [])
   
-
   const searchLoc = () => {
     // Get latitude & longitude from address.
     Geocode.fromAddress(locStr).then(
@@ -43,10 +48,11 @@ function App() {
 
       <div className="text-2xl">
         <div className='h-screen w-3/6'>
-          <Map center={center} zoom={zoom}/>
+          <Map defaultCenter={defaultCenter} center={center} zoom={zoom}/>
         </div>
         <div className='h-screen w-2/6'>
           {/* Buttons */}
+          <button onClick={() => searchLoc()} className="w-full h-screen bg-blue-100" />
         </div>
         <div className='h-screen w-1/6'>
           {/* Score */}
