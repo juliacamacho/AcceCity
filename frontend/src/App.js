@@ -16,6 +16,32 @@ function App() {
     lng: -71.093889,
   })
   const [zoom, setZoom] = useState(15)
+  const [selected, setSelected] = useState(null);
+  /**
+   * 
+   * cityData in the form: [
+   *  {
+   *    
+   *  },
+   * ]
+   * 
+   */
+  const [cityData, setCityData] = useState([
+    {
+      "lat": 42.36,
+      "lng": -71.09,
+      "score": 88,
+      "title": "Great ramp up to various resources",
+      "description": "The ramp leads to a sidewalk, a bus station, and to building access."
+    },
+    {
+      "lat": 42.365,
+      "lng": -71.093,
+      "score": 21,
+      "title": "No guard rails on ramp",
+      "description": "The ramp into the building lacks guard rails. "
+    }
+  ]);
   const [locStr, setLocStr] = useState("")
 
   useEffect(()=>{
@@ -71,6 +97,8 @@ function App() {
             containerElement={<div style={{ height: `100%` }} />}
             mapElement={<div style={{ height: `100%` }} />}
             defaultCenter={defaultCenter} center={center} zoom={zoom}
+            selected={selected} setSelected={setSelected}
+            cityData={cityData}
           />
         </div>
         
