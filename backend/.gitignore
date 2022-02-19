@@ -2,3 +2,5 @@ env/
 
 testimages/
 *.json
+
+firebase.py
