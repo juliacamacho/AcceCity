@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import MapWrapped from './components/Map';
 import Sidebar from './components/Sidebar'

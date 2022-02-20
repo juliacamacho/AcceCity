@@ -1,5 +1,3 @@
-import { isValidTimestamp } from '@firebase/util';
-import { arrayRemove } from 'firebase/firestore';
 import React from 'react';
 
 function Cards(props){

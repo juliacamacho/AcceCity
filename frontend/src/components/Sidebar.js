@@ -2,44 +2,16 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import ProgressBar from "@ramonak/react-progress-bar";
 
-// function roundScore(score){
-
-//   let new_score
-
-//   if ((0 < score) && (score <= 0.33)) {
-//     new_score = 0
-//   }
-//   else if ((0.33 < score) && (score <= 0.66)){
-//     new_score = 0.5
-//   }
-//   else {
-//     new_score = 1
-//   }
-
-//   return new_score
-
-// }
-
 function Sidebar(props){
 
   // const [selectedTags, setSelectedTags] = useState(null);
-
-  // let scoreDict = {
-  //   "bad": 0,
-
-  // }
-
   const [accessibilityScore, setAccessibilityScore] = useState()
   const [walkabilityScore, setWalkabilityScore] = useState()
   const [mobilityScore, setMobilityScore] = useState()
   const [trafficScore, setTrafficScore] = useState()
   const [overallScore, setOverallScore] = useState()
 
-  // const [analyzed, setAnalyzed] = useState([])
-
   useEffect(async ()=> {
-
-    // let tempAnalyzed = []
 
     let accessibilitySum = 0
     let accessibilityCount = 0
