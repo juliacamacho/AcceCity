@@ -79,6 +79,7 @@ def pop(name, start, end):
                     }
 
                     img_req = requests.get(baseURL, params=img_params)
+                    print("imgurl: ",img_req.url)
                     if img_req.status_code != 200:
                         print("getting image returned ", img_req.status_code, " skipping...")
                         continue
@@ -120,7 +121,8 @@ def pop(name, start, end):
                             "description": item[1],
                             "tags": item[2],
                             "scores": item[3],
-                            "score": score
+                            "score": score,
+                            "img": img_req.url
                         }
                         print("adding data", data, " to firestore")
 
