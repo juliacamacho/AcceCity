@@ -52,3 +52,36 @@ def scan():
 #     except Exception as e:
 #         logging.error(traceback.format_exc())
 #         return jsonify({'msg': '500 error'})
+
+# def objectDetect():
+#     try:
+#         file = request.files['image']
+#         print("File uploaded")
+#         #expected = request.form['expected']
+#         ret1 = det.detect(file, ["sidewalk","no sidewalk"])
+#         print("Ret1: ",ret1)
+#         ret2 = det.detect(file, ["parking lot","no parking lot"])
+#         print("Ret2: ",ret2)
+#         ret3 = "no handicap parking"
+#         if ret2=="parking lot":
+#             ret3 = det.detect(file, ["handicapped parking","regular parking"])
+#             print("Ret3: ",ret3)
+#         ret4= "no disability accessible ramp"
+#         if ret1=="sidewalk":
+#             ret4 = det.detect(file, ["ramp","no ramp"])
+#             print("Ret4: ",ret4)
+            
+#         ret5 = det.detect(file, ["traffic lights","no traffic lights"])
+#         print("Ret5: ",ret5)
+#         ret6 = "no crosswalk"
+#         if ret5=="traffic lights":
+#             ret6 = det.detect(file, ["crosswalk","no crosswalk"])
+#             print("Ret5: ",ret6)
+
+#         if ret3 =="regular parking":
+#             ret3= "no handicap parking"
+
+#         return jsonify({'sidewalk':ret1,'handicap parking':ret3, 'ramp': ret4, 'crosswalk': ret6})
+#     except Exception as e:
+#         logging.error(traceback.format_exc())
+#         return jsonify({'msg': '500 error'})
