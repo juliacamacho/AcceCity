@@ -37,7 +37,7 @@ good = {
 }
 
 
-numPoints = 1
+numPoints = 3
 
 
 def pop(name, start, end):
@@ -66,58 +66,63 @@ def pop(name, start, end):
             if body["status"] == "OK":
 
                 actualLat, actualLong = body["location"]["lat"], body["location"]["lng"]
-                img_params = {
-                    'size': '400x400', # max 640x640 pixels
-                    'location': toLocation([actualLat, actualLong]),
-                    'key': key["GCP_MAPS_KEY"],
-                    'return_error_code': "true",
-                    'heading': 0,
-                    'radius': 5,
-                    'source': 'outdoor'
-                }
 
-                img_req = requests.get(baseURL, params=img_params)
-                img = img_req.content
-                analysis = objectDetect(img)
-                # analysis = {
-                #     "crosswalk": "crosswalk",
-                #     "parking": "handicapped parking",
-                #     "ramp": "no disability accessible ramp",
-                #     "sidewalk": "no sidewalk"
-                # }
-                isGood = False
-                item = None
-
-                if analysis["sidewalk"] == "sidewalk" and "no " in analysis["ramp"]:
-                    item = poor["ramp"]
-                elif "no " not in analysis["ramp"]:
-                    item = good["ramp"]
-                elif analysis["parking"] == "regular parking":
-                    item = poor["parking"]
-                    isGood = True
-                elif analysis["parking"] == "handicapped parking": # "no parking", "handicapped parking","regular parking"
-                    item = good["parking"] 
-                    isGood = True
-                
-                if isGood:
-                    score = random.randint(50,80)
-                else:
-                    score = random.randint(10,50)
-                
-                if item != None:
-                    data={
-                        "scanID": name,
-                        "lat": actualLat,
-                        "lng": actualLong,
-                        "title": item[0],
-                        "description": item[1],
-                        "tags": item[2],
-                        "scores": item[3],
-                        "score": score
+                for i in range(4): 
+                    img_params = {
+                        'size': '400x400', # max 640x640 pixels
+                        'location': toLocation([actualLat, actualLong]),
+                        'key': key["GCP_MAPS_KEY"],
+                        'return_error_code': "true",
+                        'heading': str(i*90),
+                        'radius': 5,
+                        'source': 'outdoor'
                     }
-                    print("adding data", data, " to firestore")
 
-                    db.collection(u'scans').add(data)
+                    img_req = requests.get(baseURL, params=img_params)
+                    img = img_req.content
+                    analysis = objectDetect(img)
+                    # analysis = {
+                    #     "crosswalk": "crosswalk",
+                    #     "parking": "handicapped parking",
+                    #     "ramp": "no disability accessible ramp",
+                    #     "sidewalk": "no sidewalk"
+                    # }
+                    isGood = False
+                    item = None
+
+                    print("analysis is", analysis)
+
+                    if analysis["sidewalk"] == "sidewalk" and "no " in analysis["ramp"]:
+                        item = poor["ramp"]
+                    elif "no " not in analysis["ramp"]:
+                        item = good["ramp"]
+                    elif analysis["parking"] == "regular parking":
+                        item = poor["parking"]
+                        isGood = True
+                    elif analysis["parking"] == "handicapped parking": # "no parking", "handicapped parking","regular parking"
+                        item = good["parking"] 
+                        isGood = True
+                    
+                    if isGood:
+                        score = random.randint(50,80)
+                    else:
+                        score = random.randint(10,50)
+                    
+                    if item != None:
+                        data={
+                            "scanID": name,
+                            "lat": actualLat,
+                            "lng": actualLong,
+                            "title": item[0],
+                            "description": item[1],
+                            "tags": item[2],
+                            "scores": item[3],
+                            "score": score
+                        }
+                        print("adding data", data, " to firestore")
+
+                        db.collection(u'scans').add(data)
+                        break
 
                 # if random.random() < 0.2:
                 #     data={
