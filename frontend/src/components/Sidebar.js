@@ -32,7 +32,7 @@ function Sidebar(props){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "accessibility") ? "bg-red-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("accessibility")}}>
+        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "Accessibility") ? "bg-red-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Accessibility")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">Accessibility</button>
             </div>
@@ -40,7 +40,7 @@ function Sidebar(props){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "walkability") ? "bg-blue-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("walkability")}}>
+        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "Walkability") ? "bg-blue-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Walkability")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">Walkability</button>
             </div>
@@ -48,7 +48,7 @@ function Sidebar(props){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "mobility") ? "bg-green-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("mobility")}}>
+        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "Mobility") ? "bg-green-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Mobility")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">Mobility</button>
             </div>
@@ -56,9 +56,9 @@ function Sidebar(props){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "traffic") ? "bg-purple-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("traffic")}}>
+        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "Parking") ? "bg-purple-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Parking")}}>
             <div className="flex flex-col items-center space-y-1">
-              <button className="text-m text-center">Traffic</button>
+              <button className="text-m text-center">Parking</button>
             </div>
           </div>
         </div>
