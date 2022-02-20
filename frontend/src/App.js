@@ -64,6 +64,7 @@ function App() {
             "lng": doc.data().lng,
             "description": doc.data().description,
             "scores": doc.data().scores,
+            "score": doc.data().score,
             "tags": doc.data().tags,
           }
         )
