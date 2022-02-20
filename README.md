@@ -1,40 +1,40 @@
 # AcceCity
 
-#Inspiration
+# Inspiration
 
 Many cities in the United States are still severely behind on implementing infrastructure improvements to meet ADA (Americans with Disabilities Act) accessibility standards. Though 1 in 7 people in the US have a mobility-related disability, research has found that 65% of curb ramps and 48% of sidewalks are not accessible, and only 13% of state and local governments have transition plans for implementing improvements (Eisenberg et al, 2020). To make urban living accessible to all, cities need to upgrade their public infrastructure, starting with identifying areas that need the most improvement according to ADA guidelines. However, having city dispatchers travel and view every single area of a city is time consuming, expensive, and tedious. We aimed to utilize available data from Google Maps to streamline and automate the analysis of city areas for their compliance with ADA guidelines.
 
-#What AcceCity does
+# What AcceCity does
 
 AcceCity provides a machine learning-powered mapping platform that enables cities, urban planners, neighborhood associations, disability activists, and more to identify key areas to prioritize investment in. AcceCity identifies both problematic and up-to-standards spots and provides an interactive, dynamic map that enables on-demand regional mapping of accessibility concerns and improvements and street views of sites.
 
-###Interactive dynamic map
+### Interactive dynamic map
 
 AcceCity implements an interactive map, with city and satellite views, that enables on-demand mapping of accessibility concerns and improvements. Users can specify what regions they want to analyze, and a street view enables viewing of specific spots.
 
-###Detailed accessibility concerns
+### Detailed accessibility concerns
 
 AcceCity calculuates scores for each concern based on ADA standards in four categories: general accessibility, walkability, mobility, and parking. Examples of the features we used for each of these categories include the detection of ramps in front of raised entrances, the presence of sidewalks along roads, crosswalk markings at street intersections, and the number of handicap-reserved parking spots in parking lots. In addition, suggestions for possible solutions or improvements are provided for each concern.
 
-###Accessibility scores
+### Accessibility scores
 
 AcceCity auto-generates metrics for areas by computing regional scores (based on the scan area selected by the user) by category (general accessibility, walkability, mobility, and parking) in addition to an overall composite score.
 
-#How we built it
+# How we built it
 
-###Frontend
+### Frontend
 
 We built the frontend using React with TailwindCSS for styling. The interactive dynamic map was implemented using the Google Maps API, and all map and site data are updated in real-time from Firebase using listeners.
 
 New scan data are also instantly saved to the cloud for future reuse.
 
-###Machine learning backend
+### Machine learning backend
 
 First, we used the Google Maps API to send images of the street view to the backend. We looked for handicapped parking, sidewalks, disability ramps, and crosswalks and used computer vision, by custom-fitting a zero shot learning model called CLIP from OpenAI, to automatically detect those objects from the images. We tested the model using labeled data from Scale Rapid API.
 
 After running this endpoint on all images in a region of interest, users can calculate a metric that represents the accessibility of that area to people with disabilities. We call that metric the ADA score, which can be good, average, or poor. (Regions with a poor ADA score should be specifically targeted by city planners to increase its accessibility.) We calculated this ADA score based on features such as the number of detected ramps, handicapped parking spaces, crosswalks, and sidewalks from the google maps image analysis discussed previously, in addition to using the number of accidents per year recorded in that area. We trained a proof of concept model using mage.ai, which provides an intuitive and high-level way to train custom models.
 
-##Challenges we ran into
+## Challenges we ran into
 
 Applying ML to diverse urban images, especially since it’s so “in the wild”
 Lack of general ML models for accessibility prediction
@@ -46,19 +46,19 @@ We developed the first framework that connects Google Maps images with computer 
 We developed the first computer vision framework/model aimed to detect objects specific for people with disabilities
 We integrated the Google Maps API with a responsive frontend that allows users to view their areas of interest and enter street view to see the results of the model.
 
-##What we learned
+## What we learned
 
 We learned how to integrate the Google Maps API for different purposes.
 We learned how to customize the OpenAI zero shot learning for specific tasks.
 How to use Scale Rapid API to label images
 How to use Mage.ai to quickly and efficiently train classification models.
 
-##What's next for AcceCity
+## What's next for AcceCity
 
 Integrating more external data (open city data): public buildings, city zoning, locations of social services, etc.
 Training the machine learning models with more data collected in tandem with city officials.
 
-##Ethical considerations
+## Ethical considerations
 
 As we develop technology made to enable and equalize the playing field for all people, it is important for us to benchmark our efforts against sustainable and ethical products. Accecity was developed with several ethical considerations in mind to address a potentially murky future at the intersection of everyday life (especially within our civilian infrastructure) and digital technology.
 
