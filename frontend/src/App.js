@@ -22,7 +22,7 @@ function App() {
   })
   const [zoom, setZoom] = useState(15)
   const [isEditing, setIsEditing] = useState(true);
-  const [selectedtags, setSelectedtags] = useState(null);
+  const [selectedTags, setSelectedTags] = useState("allConcerns");
   const [selected, setSelected] = useState(null);
   /**
    * 
@@ -126,7 +126,7 @@ function App() {
                 <option disabled selected>Filter By...</option>
                 <option value="Accessbility">Accessbility</option>
                 <option value="Walkability">Walkability</option>
-                <option value="Traffic">Traffic</option>
+                <option value="Mobility">Mobility</option>
                 <option value="Parking">Parking</option>
               </select>
               
@@ -152,15 +152,15 @@ function App() {
             data={cityData} 
             selected={selected} 
             setSelected={setSelected}
-            selectedtags={selectedtags} 
-            setSelectedtags={setSelectedtags}
+            selectedTags={selectedTags} 
+            setSelectedTags={setSelectedTags}
           />
 
         </div>
         <div className='overflow-y-auto h-screen col-span-1 py-6 px-10'>
             <Sidebar 
-            selected={selectedtags} 
-            setSelected={setSelectedtags}
+            selected={selectedTags} 
+            setSelected={setSelectedTags}
             data={cityData} 
             />
         </div>    

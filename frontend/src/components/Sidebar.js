@@ -22,7 +22,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 
 function Sidebar(props){
 
-  const [selectedtags, setSelectedtags] = useState(null);
+  // const [selectedTags, setSelectedTags] = useState(null);
 
   // let scoreDict = {
   //   "bad": 0,
@@ -111,13 +111,13 @@ function Sidebar(props){
           </div>
         </div>
 
-        <hr class="bg-gray-500 lg:w-full md:my-5 my-5" />
+        <hr class="bg-gray-500 lg:w-full mt-3 mb-5" />
 
         { /* Concern Buttons */}
 
         <div className="grid-cols-3 pb-4">
           
-          <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "allConcerns") ? "bg-gray-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("allConcerns")}}>
+          <div className={`rounded-lg border shadow p-2 max-w-lg ${(props.selected === "allConcerns") ? "bg-gray-600 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("allConcerns")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">All Concerns</button>
             </div>
@@ -126,7 +126,7 @@ function Sidebar(props){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "Accessibility") ? "bg-red-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Accessibility")}}>
+        <div className={`rounded-lg border shadow p-2 max-w-lg ${(props.selected === "Accessibility") ? "bg-purple-600 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Accessibility")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">Accessibility</button>
             </div>
@@ -134,7 +134,7 @@ function Sidebar(props){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "Walkability") ? "bg-blue-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Walkability")}}>
+        <div className={`rounded-lg border shadow p-2 max-w-lg ${(props.selected === "Walkability") ? "bg-blue-600 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Walkability")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">Walkability</button>
             </div>
@@ -142,7 +142,7 @@ function Sidebar(props){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "Mobility") ? "bg-green-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Mobility")}}>
+        <div className={`rounded-lg border shadow p-2 max-w-lg ${(props.selected === "Mobility") ? "bg-green-600 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Mobility")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">Mobility</button>
             </div>
@@ -150,14 +150,14 @@ function Sidebar(props){
         </div>
 
         <div className="grid-cols-3 pb-4">
-        <div className={`rounded-sm border shadow p-2 max-w-lg ${(props.selected === "Parking") ? "bg-purple-700 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Parking")}}>
+        <div className={`rounded-lg border shadow p-2 max-w-lg ${(props.selected === "Parking") ? "bg-orange-600 text-white"  : "bg-white text-black"}`} onClick={() => {props.setSelected("Parking")}}>
             <div className="flex flex-col items-center space-y-1">
               <button className="text-m text-center">Parking</button>
             </div>
           </div>
         </div>
 
-        <div className="grid-cols-3 pb-4">
+        {/* <div className="grid-cols-3 pb-4">
           <form onSubmit={(e)=>{
             e.preventDefault();
           }}>
@@ -168,9 +168,9 @@ function Sidebar(props){
             placeholder="Search for Concern..."
             />
           </form >
-        </div>
+        </div> */}
 
-        <hr class="bg-gray-500 lg:w-full md:my-5 my-5" />
+        <hr class="bg-gray-500 lg:w-full mt-3 mb-5" />
 
       {/*Individual Scores bars*/}
       <div className="grid-cols-3 pb-4">
@@ -258,7 +258,7 @@ function Sidebar(props){
         <div className="flex">
           <div className="w-2/3">
             <h1 className="text-orange-600 font-semibold">
-            Traffic
+            Parking
             </h1>
             <span className="block text-xs text-orange-600">{trafficScore === 1 ? "Excellent" : "Needs improvement"}</span>
           </div>
