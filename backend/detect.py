@@ -2,6 +2,9 @@ import clip
 import torch
 from PIL import Image
 import io
+import traceback
+import logging
+from datetime import datetime
 
 class ObjectDetector:
     def __init__(self):
@@ -33,13 +36,14 @@ det = ObjectDetector()
 def objectDetect(im):
     try:
         image = Image.open(io.BytesIO(im))
+        image.save('./testimages/google/all/test'+str(int(datetime.utcnow().timestamp()))+'.png',"PNG")
         #expected = request.form['expected']
         ret1 = det.detect(image, ["sidewalk","no sidewalk"])
         print("Ret1: ",ret1)
-        ret2 = det.detect(image, ["parking lot","no parking lot"])
+        ret2 = det.detect(image, ["parking","no parking"])
         print("Ret2: ",ret2)
         ret3 = "no parking"
-        if ret2=="parking lot":
+        if ret2=="parking":
             ret3 = det.detect(image, ["handicapped parking","regular parking"])
             print("Ret3: ",ret3)
         ret4= "no disability accessible ramp"
@@ -56,7 +60,20 @@ def objectDetect(im):
 
         # if ret3 =="regular parking":
         #     ret3= "no handicap parking"
+        
 
+        if ret1=="sidewalk":
+            image.save('./testimages/google/sidewalk/test'+str(int(datetime.utcnow().timestamp()))+'.png',"PNG")
+        if ret2=="parking lot":
+            image.save('./testimages/google/parking lot/test'+str(int(datetime.utcnow().timestamp()))+'.png',"PNG")
+        if ret3 == "handicapped parking":
+            image.save('./testimages/google/handicapped parking/test'+str(int(datetime.utcnow().timestamp()))+'.png',"PNG")
+        if ret4 == "ramp":
+            image.save('./testimages/google/ramp/test'+str(int(datetime.utcnow().timestamp()))+'.png',"PNG")
+        if ret5 == "traffic lights":
+            image.save('./testimages/google/traffic lights/test'+str(int(datetime.utcnow().timestamp()))+'.png',"PNG")
+        if ret6 == "crosswalk":
+            image.save('./testimages/google/crosswalk/test'+str(int(datetime.utcnow().timestamp()))+'.png',"PNG")
         return {'sidewalk':ret1,'parking':ret3, 'ramp': ret4, 'crosswalk': ret6}
     except Exception as e:
         logging.error(traceback.format_exc())

@@ -1,4 +1,5 @@
 env/
+venv/
 
 testimages/
 *.json
@@ -6,3 +7,5 @@ testimages/
 db.py
 
 downloads/
+
+__pycache__/

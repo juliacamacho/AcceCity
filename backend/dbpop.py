@@ -99,7 +99,7 @@ def pop(name, start, end):
                         item = poor["ramp"]
                     elif "no " not in analysis["ramp"]:
                         item = good["ramp"]
-                    elif analysis["parking"] == "regular parking":
+                    elif analysis["parking"] == "parking":
                         item = poor["parking"]
                         isGood = True
                     elif analysis["parking"] == "handicapped parking": # "no parking", "handicapped parking","regular parking"

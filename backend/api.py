@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
-import dbmock
+# import dbmock
+import dbpop
 # import traceback
 # import logging
 # from detect import ObjectDetector
@@ -25,6 +26,6 @@ def scan():
     args = request.args
     print("got args ", args)
 
-    dbmock.pop(args["name"], [float(args["southWestLat"]),float(args["southWestLng"])], [float(args["northEastLat"]),float(args["northEastLng"])])
+    dbpop.pop(args["name"], [float(args["southWestLat"]),float(args["southWestLng"])], [float(args["northEastLat"]),float(args["northEastLng"])])
 
     return "ok"
