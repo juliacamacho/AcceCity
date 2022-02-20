@@ -141,13 +141,15 @@ function Map(props) {
                 }}
                 >
                 <div>
-                    {/* {props.selected.score < 50 ? 
-                    <p className='text-xl pb-1 text-red-600'>{props.selected.title}</p>
-                    :
-                    <p className='text-xl pb-1 text-green-600'>{props.selected.title}</p>
+                    {props.selected.score < 50 ? 
+                        <p className='text-xl pb-1 text-red-600'>{props.selected.title}</p>
+                        :
+                        <p className='text-xl pb-1 text-green-600'>{props.selected.title}</p>
+                        }
+
+                    {props.selected.img ? <img src={props.selected.img}/> :
+                        <p>{props.selected.description}</p>
                     }
-                    <p>{props.selected.description}</p> */}
-                    <img src={props.selected.img}/>
                 </div>
                 </InfoWindow>
             )}

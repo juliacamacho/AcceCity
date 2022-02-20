@@ -46,6 +46,7 @@ function App() {
             "scores": doc.data().scores,
             "score": doc.data().score,
             "tags": doc.data().tags,
+            "img": doc.data().img,
           }
         )
       })).then((result) => {
