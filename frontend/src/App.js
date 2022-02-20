@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import setup from './setup.json'
 
 import { db } from './config/firebase'
-import { getDocs, collection } from "firebase/firestore"; 
+import { getDocs, onSnapshot, collection } from "firebase/firestore"; 
 
 
 function App() {
@@ -48,11 +48,11 @@ function App() {
   const [cityData, setCityData] = useState([]);
   const [locStr, setLocStr] = useState("")
 
-  useEffect(async ()=>{
+  useEffect(async () => {
     Geocode.setApiKey(setup.GCP_MAPS_KEY);
     Geocode.setLocationType("ROOFTOP");
 
-    getDocs(collection(db, "scans")).then((snapshot) => {
+    const stopListening = onSnapshot(collection(db, "scans"), (snapshot) => {
 
       Promise.all(snapshot.docs.map((doc) => {
         return (
@@ -75,7 +75,9 @@ function App() {
 
     })
 
-  }, [])
+    return stopListening
+
+  }, [db])
   
   const searchLoc = () => {
     // Get latitude & longitude from address.

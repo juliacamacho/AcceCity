@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Cards(props){
+
   return(
 
     <div className="space-y-4">
@@ -13,14 +14,26 @@ function Cards(props){
           <div className="pb-2 text-lg font-semibold">
             {item.title}
           </div>
-          <div>
-            ({item.lng}, {item.lat})
+          <div className="text-xs mb-2">
+            Coordinates: ({Math.round(item.lng)}, {Math.round(item.lat)})
           </div>
-          <div>
+          <div className="mb-2">
             {item.description}
           </div>
           <div>
-            Scores: {item.scores.map((score) => `${score}, `)}
+            <span className="font-semibold">Category scores:</span> {item.scores.map((score) => {
+
+              if (score === 0){
+                return(" Bad •")
+              }
+              else if (score === 0.5){
+                return(" Average •")
+              }
+              else {
+                return(" Good •")
+              }
+
+            })}
           </div>
         </div>
       )
