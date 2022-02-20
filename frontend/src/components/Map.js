@@ -19,6 +19,7 @@ function Map(props) {
     const [isEditing, setIsEditing] = useState(false)
 
     const rect = createRef()
+    const gmap = createRef()
 
     const handleClick = () => {
         setShowModal(true)
@@ -75,18 +76,21 @@ function Map(props) {
       }, []);
 
       useEffect(()=> {
-        console.log("setting new bounds")
-        setBounds(new window.google.maps.LatLngBounds(
-            {
-                lat: props.center.lat - 0.005,
-                lng: props.center.lng - 0.005
-            },
-            {
-                lat: props.center.lat + 0.005,
-                lng: props.center.lng + 0.005
-            },
-        ))
-      }, [props.center])
+          if (isEditing) {
+              let center = gmap.current.getCenter()
+              console.log("setting new bounds", center)
+              setBounds(new window.google.maps.LatLngBounds(
+                  {
+                      lat: center.lat() - 0.005,
+                      lng: center.lng() - 0.005
+                  },
+                  {
+                      lat: center.lat() + 0.005,
+                      lng: center.lng() + 0.005
+                  },
+              ))
+          }
+      }, [isEditing])
 
     return (
         // Important! Always set the container height explicitly
@@ -99,6 +103,7 @@ function Map(props) {
             center={props.center}
             defaultZoom={props.zoom}
             defaultOptions={{ styles: MapStylesRetro }}
+            ref={gmap}
         >
             {(bounds && isEditing) && (
             <Rectangle 
