@@ -1,4 +1,5 @@
 import './App.css';
+import logo from './assets/real_logo.png'
 import MapWrapped from './components/Map';
 import Sidebar from './components/Sidebar'
 import Cards from './components/Cards'
@@ -23,27 +24,7 @@ function App() {
   const [isEditing, setIsEditing] = useState(true);
   const [selectedTags, setSelectedTags] = useState("allConcerns");
   const [selected, setSelected] = useState(null);
-  /**
-   * 
-   * cityData in the form: 
-  [
-    {
-      "lat": 42.36,
-      "lng": -71.09,
-      "score": 88,
-      "title": "Great ramp up to various resources",
-      "description": "The ramp leads to a sidewalk, a bus station, and to building access."
-    },
-    {
-      "lat": 42.365,
-      "lng": -71.093,
-      "score": 21,
-      "title": "No guard rails on ramp",
-      "description": "The ramp into the building lacks guard rails. "
-    }
-  ]
-   * 
-   */
+ 
   const [cityData, setCityData] = useState([]);
   const [locStr, setLocStr] = useState("")
 
@@ -97,8 +78,8 @@ function App() {
   return (
     <div className='max-h-full'>
 
-      <div className="bg-sky-500 text-2xl font-bold text-white py-2 px-10">
-        AccCity
+      <div className="bg-sky-500 text-2xl font-bold text-white py-2 px-7">
+        <img src={logo} className="h-8" />
       </div>
 
       <div className="grid grid-cols-6">
