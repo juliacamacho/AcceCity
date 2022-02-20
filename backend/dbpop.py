@@ -73,12 +73,15 @@ def pop(name, start, end):
                         'location': toLocation([actualLat, actualLong]),
                         'key': key["GCP_MAPS_KEY"],
                         'return_error_code': "true",
-                        'heading': str(i*90),
+                        'heading': i*90,
                         'radius': 5,
                         'source': 'outdoor'
                     }
 
                     img_req = requests.get(baseURL, params=img_params)
+                    if img_req.status_code != 200:
+                        print("getting image returned ", img_req.status_code, " skipping...")
+                        continue
                     img = img_req.content
                     analysis = objectDetect(img)
                     # analysis = {
