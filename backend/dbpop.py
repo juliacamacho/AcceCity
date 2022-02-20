@@ -5,6 +5,8 @@ from urllib.parse import urlencode
 import json
 import requests
 import random
+from detect import objectDetect
+# import time
 
 f = open("streetKey.json")
 key = json.load(f)
@@ -17,21 +19,26 @@ cred = credentials.Certificate('./gcp_privkey.json')
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
-baseURL = "https://maps.googleapis.com/maps/api/streetview/metadata"
-poor=[
-    ["No guard rails on ramp", "The ramp into the building lacks guard rails. Recommend installing rails for health and safety of disabled peoples.",["Walkability", "Accessibility"],[1, 0.5]],
-    ["Few reserved parking spaces", "The parking lot lacks reserved parking spaces. Recommend designating more handicap spaces.",["Parking"],[0.5]],
-    ["No easy access to sidewalk", "The sidewalk lacks easy wheelchair access. Recommend installing a ramp somewhere within 50 meters",["Walkability", "Accessibility"],[0.5, 0.5]],
-    ["No easy access to sidewalk and bus station", "The sidewalk and bus station lack easy wheelchair access. Recommend installing a ramp somewhere within 50 meters",["Walkability", "Accessibility"],[0.5, 0]],
-]
+baseURL = "https://maps.googleapis.com/maps/api/streetview"
+poor={
+    "ramp": ["No disability accessible ramp", "There is no ramp to access the sidewalk. Recommend installing a ramp somewhere within 50 meters.",["Walkability", "Accessibility"],[0.7, 0.5]],
+    "parking": ["Few reserved parking spaces", "The parking lot lacks reserved parking spaces. Recommend designating more handicap spaces.",["Parking"],[0.4]],
+}
+# poor=[
+#     ["No guard rails on ramp", "The ramp into the building lacks guard rails. Recommend installing rails for health and safety of disabled peoples.",["Walkability", "Accessibility"],[0.7, 0.5]],
+#     ["Few reserved parking spaces", "The parking lot lacks reserved parking spaces. Recommend designating more handicap spaces.",["Parking"],[0.4]],
+#     ["No easy access to sidewalk", "The sidewalk lacks easy wheelchair access. Recommend installing a ramp somewhere within 50 meters",["Walkability", "Accessibility"],[0.55, 0.65]],
+#     ["No easy access to sidewalk and bus station", "The sidewalk and bus station lack easy wheelchair access. Recommend installing a ramp somewhere within 50 meters",["Walkability", "Accessibility"],[0.5, 0.2]],
+# ]
 
-good = [
-    ["Great wheelchair accessibility", "This area has many instances of ramps, guardrails.", ["Walkability", "Accessibility"],[1, 1]],
-    ["Great parking accessibility", "This area has a great ratio of reserved parking to regular parking.",["Parking"],[1]]
-]
+good = {
+    "ramp": ["Great wheelchair accessibility", "This area has instances of ramps and/or guardrails.", ["Walkability", "Accessibility"],[0.9, 1]],
+    "parking": ["Great parking accessibility", "This area has a great ratio of reserved parking to regular parking.",["Parking"],[0.95]]
+}
 
 
-numPoints = 10
+numPoints = 1
+
 
 def pop(name, start, end):
     print("called pop with ", start, end)
@@ -52,42 +59,90 @@ def pop(name, start, end):
                 'return_error_code': "true"
             }
 
-            r = requests.get(baseURL, params=params)
+            r = requests.get(baseURL+"/metadata", params=params)
             # print(r.url)
 
             body = dict(r.json())
             if body["status"] == "OK":
-                # print(body)
-                # if "location" not in body:
-                #     print("breaking")
-                #     continue
 
                 actualLat, actualLong = body["location"]["lat"], body["location"]["lng"]
+                img_params = {
+                    'size': '400x400', # max 640x640 pixels
+                    'location': toLocation([actualLat, actualLong]),
+                    'key': key["GCP_MAPS_KEY"],
+                    'return_error_code': "true",
+                    'heading': 0,
+                    'radius': 5,
+                    'source': 'outdoor'
+                }
 
-                print(actualLat, actualLong)
-                if random.random() < 0.2:
+                img_req = requests.get(baseURL, params=img_params)
+                img = img_req.content
+                analysis = objectDetect(img)
+                # analysis = {
+                #     "crosswalk": "crosswalk",
+                #     "parking": "handicapped parking",
+                #     "ramp": "no disability accessible ramp",
+                #     "sidewalk": "no sidewalk"
+                # }
+                isGood = False
+                item = None
+
+                if analysis["sidewalk"] == "sidewalk" and "no " in analysis["ramp"]:
+                    item = poor["ramp"]
+                elif "no " not in analysis["ramp"]:
+                    item = good["ramp"]
+                elif analysis["parking"] == "regular parking":
+                    item = poor["parking"]
+                    isGood = True
+                elif analysis["parking"] == "handicapped parking": # "no parking", "handicapped parking","regular parking"
+                    item = good["parking"] 
+                    isGood = True
+                
+                if isGood:
+                    score = random.randint(50,80)
+                else:
+                    score = random.randint(10,50)
+                
+                if item != None:
                     data={
                         "scanID": name,
-                        "lat": body["location"]["lat"],
-                        "lng": body["location"]["lng"]
+                        "lat": actualLat,
+                        "lng": actualLong,
+                        "title": item[0],
+                        "description": item[1],
+                        "tags": item[2],
+                        "scores": item[3],
+                        "score": score
                     }
+                    print("adding data", data, " to firestore")
 
-                    if random.random() <0.7:
-                        data["score"] = random.randint(8,50)
-                        p = random.choice(poor)
-                        data["title"] = p[0]
-                        data["description"] = p[1]
-                        data["tags"] = p[2]
-                        data["scores"] = p[3]
-                    else:
-                        data["score"] = random.randint(50,80)
-                        p = random.choice(good)
-                        data["title"] = p[0]
-                        data["description"] = p[1]
-                        data["tags"] = p[2]
-                        data["scores"] = p[3]
-                    
                     db.collection(u'scans').add(data)
+
+                # if random.random() < 0.2:
+                #     data={
+                #         "scanID": name,
+                #         "lat": body["location"]["lat"],
+                #         "lng": body["location"]["lng"]
+                #     }
+
+                #     if random.random() <0.7:
+                #         data["score"] = random.randint(8,50)
+                #         p = random.choice(poor)
+                #         data["title"] = p[0]
+                #         data["description"] = p[1]
+                #         data["tags"] = p[2]
+                #         data["scores"] = p[3]
+                #     else:
+                #         data["score"] = random.randint(50,80)
+                #         p = random.choice(good)
+                #         data["title"] = p[0]
+                #         data["description"] = p[1]
+                #         data["tags"] = p[2]
+                #         data["scores"] = p[3]
+                    
+                #     db.collection(u'scans').add(data)
+                    # time.sleep(0.2)
 
         s[0] += latIncr
 
