@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import setup from './setup.json'
 
 import { db } from './config/firebase'
-import { getDocs, collection } from "firebase/firestore"; 
+import { getDocs, onSnapshot, collection } from "firebase/firestore"; 
 
 
 function App() {
@@ -48,11 +48,11 @@ function App() {
   const [cityData, setCityData] = useState([]);
   const [locStr, setLocStr] = useState("")
 
-  useEffect(async ()=>{
+  useEffect(async () => {
     Geocode.setApiKey(setup.GCP_MAPS_KEY);
     Geocode.setLocationType("ROOFTOP");
 
-    getDocs(collection(db, "scans")).then((snapshot) => {
+    const stopListening = onSnapshot(collection(db, "scans"), (snapshot) => {
 
       Promise.all(snapshot.docs.map((doc) => {
         return (
@@ -63,6 +63,7 @@ function App() {
             "lat": doc.data().lat,
             "lng": doc.data().lng,
             "description": doc.data().description,
+            "scores": doc.data().scores,
             "score": doc.data().score,
             "tags": doc.data().tags,
           }
@@ -74,7 +75,9 @@ function App() {
 
     })
 
-  }, [])
+    return stopListening
+
+  }, [db])
   
   const searchLoc = () => {
     // Get latitude & longitude from address.
@@ -101,26 +104,31 @@ function App() {
 
       <div className="grid grid-cols-6">
         <div className='h-screen col-span-3 py-6 px-10'>
-          <div className="grid-cols-3 pb-4">
-            <form className="flex" onSubmit={(e)=>{
+          <div className="pb-4">
+            <form className="grid grid-cols-4" onSubmit={(e)=>{
               e.preventDefault();
               searchLoc()
             }}>
             <input 
-              type="text"
-              id="search"
-              className="col-span-2 w-10/12 shadow focus:ring-blue-500 border-gray-300 px-4 rounded-sm py-2" 
-              placeholder="Search for a city, street, or address..."
-              onChange={(e)=>setLocStr(e.target.value)}
-              value={locStr}
-              />
-            <select class="px-4 py-3 w-2/12 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
-              <option value="">Filter By...</option>
-              <option value="Traffic">Traffic</option>
-              <option value="Walkability">Walkability</option>
-              <option value="Accessbility">Accessbility</option>
-              <option value="Parking">Parking</option>
-            </select>
+                type="text"
+                id="search"
+                className="col-span-3 w-10/12 shadow focus:ring-blue-500 border-gray-300 px-4 rounded-sm py-2" 
+                placeholder="Search for a city, street, or address..."
+                onChange={(e)=>setLocStr(e.target.value)}
+                value={locStr}
+                />
+              <select
+                id="location"
+                name="location"
+                className="col-span-1 pl-3 pr-10 py-2 text-base bg-gray-100 border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                defaultValue="Accessbility"
+              >
+                <option disabled selected>Filter By...</option>
+                <option value="Accessbility">Accessbility</option>
+                <option value="Walkability">Walkability</option>
+                <option value="Traffic">Traffic</option>
+                <option value="Parking">Parking</option>
+              </select>
               
             </form >
           </div>
@@ -153,6 +161,7 @@ function App() {
             <Sidebar 
             selected={selectedtags} 
             setSelected={setSelectedtags}
+            data={cityData} 
             />
         </div>    
       </div>

@@ -3,4 +3,6 @@ env/
 testimages/
 *.json
 
-firebase.py
+db.py
+
+downloads/
