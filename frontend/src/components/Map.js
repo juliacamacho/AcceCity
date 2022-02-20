@@ -142,9 +142,9 @@ function Map(props) {
                 >
                 <div>
                     {props.selected.score < 50 ? 
-                    <p className='text-xl pb-1 text-red-300'>{props.selected.title}</p>
+                    <p className='text-xl pb-1 text-red-600'>{props.selected.title}</p>
                     :
-                    <p className='text-xl pb-1 text-green-300'>{props.selected.title}</p>
+                    <p className='text-xl pb-1 text-green-600'>{props.selected.title}</p>
                     }
                     <p>{props.selected.description}</p>
                 </div>

@@ -8,7 +8,7 @@ function Sidebar(props){
   const [accessibilityScore, setAccessibilityScore] = useState()
   const [walkabilityScore, setWalkabilityScore] = useState()
   const [mobilityScore, setMobilityScore] = useState()
-  const [trafficScore, setTrafficScore] = useState()
+  const [parkingScore, setParkingScore] = useState()
   const [overallScore, setOverallScore] = useState()
 
   useEffect(async ()=> {
@@ -24,8 +24,8 @@ function Sidebar(props){
 
     for(let i=0; i<props.data.length; i++){
       for(let j=0; j<props.data[i].tags.length; j++){
-        console.log("id:", props.data[i].id)
-        console.log("TAG:", props.data[i].tags[j])
+        // console.log("id:", props.data[i].id)
+        // console.log("TAG:", props.data[i].tags[j])
         if (props.data[i].tags[j] === ("Accessibility")){
           accessibilitySum += props.data[i].scores[j]
           accessibilityCount += 1
@@ -38,23 +38,23 @@ function Sidebar(props){
           mobilitySum += props.data[i].scores[j]
           mobilityCount += 1
         }
-        else if (props.data[i].tags[j] === ("Traffic")){
+        else if (props.data[i].tags[j] === ("Parking")){
           trafficSum += props.data[i].scores[j]
           trafficCount += 1
         }
       }
     }
 
-    console.log("ACC SUM:", accessibilitySum)
-    console.log("ACC COUNT:", accessibilityCount)
-    console.log("ACC:", (accessibilitySum / accessibilityCount))
+    // console.log("ACC SUM:", accessibilitySum)
+    // console.log("ACC COUNT:", accessibilityCount)
+    // console.log("ACC:", (accessibilitySum / accessibilityCount))
 
     setAccessibilityScore((accessibilityCount !== 0) ? (accessibilitySum / accessibilityCount) : 1)
     setWalkabilityScore((walkabilityCount !== 0) ? (walkabilitySum / walkabilityCount) : 1)
     setMobilityScore((mobilityCount !== 0) ? (mobilitySum / mobilityCount) : 1)
-    setTrafficScore((trafficCount !== 0) ? (trafficSum / trafficCount) : 1)
+    setParkingScore((trafficCount !== 0) ? (trafficSum / trafficCount) : 1)
 
-    let overallScore_qual = accessibilityScore + walkabilityScore + mobilityScore + trafficScore
+    let overallScore_qual = accessibilityScore + walkabilityScore + mobilityScore + parkingScore
 
     if (overallScore_qual < (4/3)){
       setOverallScore("Bad")
@@ -232,7 +232,7 @@ function Sidebar(props){
             <h1 className="text-orange-600 font-semibold">
             Parking
             </h1>
-            <span className="block text-xs text-orange-600">{trafficScore === 1 ? "Excellent" : "Needs improvement"}</span>
+            <span className="block text-xs text-orange-600">{parkingScore === 1 ? "Excellent" : "Needs improvement"}</span>
           </div>
           <div className="w-1/3">
           <span className="float-right text-xs bg-orange-600 rounded-2xl px-1 py-1 text-white">
@@ -243,12 +243,12 @@ function Sidebar(props){
           </div>
         </div>
         <div className="flex">
-          <span className="text-xs font-semibold py-1 ml-auto text-orange-600">{100*trafficScore}%</span>
+          <span className="text-xs font-semibold py-1 ml-auto text-orange-600">{Math.round(100*parkingScore)}%</span>
         </div>
         <div className="">
           {/* <div className="w-3/4 h-2 rounded rounded-r-none bg-purple-600" />
           <div className="w-1/4 h-2 rounded rounded-l-none bg-purple-600" /> */}
-          <ProgressBar completed={100*trafficScore} customLabel=" " bgColor="#ea580c" height="15px" />
+          <ProgressBar completed={100*parkingScore} customLabel=" " bgColor="#ea580c" height="15px" />
         </div>
       </div>
       </div>
